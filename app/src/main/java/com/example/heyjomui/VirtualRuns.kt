@@ -44,7 +44,7 @@ fun Header() {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp),
+            .height(60.dp),
         contentColor = Color.Black,
     ) {
         Row(
@@ -70,6 +70,21 @@ fun Header() {
             )
         }
     }
+}
+
+@Composable
+fun RegisteredEvents() {
+    Text(
+        text = "Registered Events (3)",
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color(0xFFD9D9D9))
+            .padding(16.dp, 8.dp),
+        fontSize = 18.sp,
+        color = Color.Black,
+        textAlign = TextAlign.Start,
+        fontFamily = inter_bold
+    )
 }
 
 @Composable
@@ -214,10 +229,10 @@ fun ScrollableHorizontalCardViews() {
     LazyRow(
         modifier = Modifier
             .background(color = Color(0xFFD9D9D9))
-            .padding(8.dp, bottom = 24.dp)
+            .padding(8.dp, 8.dp, 8.dp, 24.dp)
     ) {
         items(3) { index ->
-            val (title, imageResId) = getCardInfoForIndex(index)
+            val (title, imageResId) = getHorizontalCardInfoForIndex(index)
 
             HorizontalCardView(
                 imageResId = imageResId,
@@ -228,7 +243,84 @@ fun ScrollableHorizontalCardViews() {
     }
 }
 
-private fun getCardInfoForIndex(index: Int): Pair<String, Int> {
+@Composable
+fun VirtualRuns() {
+    Text(
+        text = "Virtual Runs Nearby",
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp, 8.dp),
+        fontSize = 18.sp,
+        color = Color.Black,
+        textAlign = TextAlign.Start,
+        fontFamily = inter_bold
+    )
+}
+
+@Composable
+fun VerticalCardView(imageResId: Int, title: String) {
+    val iconBackgroundColor = Color(0xFFFBBA00)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp, 8.dp)
+            .background(Color.White, shape = RoundedCornerShape(10.dp))
+            .border(width = 0.5.dp, color = Color(0xFF495E57), shape = RoundedCornerShape(10.dp))
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Image(
+                painter = painterResource(id = imageResId),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(178.dp)
+                    .clip(
+                        shape = RoundedCornerShape(
+                            topStart = 10.dp,
+                            topEnd = 10.dp,
+                            bottomStart = 0.dp,
+                            bottomEnd = 0.dp
+                        )
+                    )
+            )
+            Text(
+                text = title,
+                fontFamily = inter_bold,
+                style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
+                modifier = Modifier.padding(16.dp, 4.dp)
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(16.dp, 0.dp, 16.dp, 16.dp)
+            ) {
+                // Display the icon inside a circle with the icon background color
+                Surface(
+                    shape = CircleShape,
+                    color = iconBackgroundColor,
+                    modifier = Modifier
+                        .size(32.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.safety_glasse),
+                        contentDescription = null,
+                        tint = Color.Black,
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    )
+                }
+                Text(
+                    text = "5km Virtual Run",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
+                    fontFamily = inter_regular,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+private fun getHorizontalCardInfoForIndex(index: Int): Pair<String, Int> {
     val title = when (index) {
         0 -> "HeadHunter Virtual Run"
         1 -> "New Year Virtual Run 2024"
@@ -240,6 +332,25 @@ private fun getCardInfoForIndex(index: Int): Pair<String, Int> {
         0 -> R.drawable.image_4
         1 -> R.drawable.image_5
         2 -> R.drawable.image_6
+        else -> R.drawable.ic_launcher_foreground
+    }
+
+    return title to imageResId
+}
+
+
+fun getVerticalCardInfoForIndex(index: Int): Pair<String, Int> {
+    val title = when (index) {
+        0 -> "Kopi Cats 5K VR"
+        1 -> "Gamer Life 5K VR"
+        2 -> "KOI Dash Virtual Run"
+        else -> "Default Title"
+    }
+
+    val imageResId = when (index) {
+        0 -> R.drawable.image_1
+        1 -> R.drawable.image_2
+        2 -> R.drawable.image_3
         else -> R.drawable.ic_launcher_foreground
     }
 
