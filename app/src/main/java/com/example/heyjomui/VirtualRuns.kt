@@ -1,6 +1,5 @@
 package com.example.heyjomui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -51,7 +52,7 @@ fun Header() {
                 .fillMaxWidth()
                 .background(Color(0xFFFBBA00)),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center // Set to Center to make the text center-aligned
+            horizontalArrangement = Arrangement.Center
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
@@ -61,7 +62,7 @@ fun Header() {
             Text(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 24.dp), // This will make the Text take the available space and center it
+                    .padding(end = 24.dp),
                 text = "Virtual Runs",
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
@@ -72,36 +73,26 @@ fun Header() {
 }
 
 @Composable
-fun HorizontalCardView() {
-
-    // Define the colors for the icon background and the dividers
+fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
     val iconBackgroundColor = Color(0xFFFBBA00)
 
-    // Create a card with some padding and a column layout
     Row(
         modifier = Modifier
             .width(340.dp)
-            .padding(horizontal = 16.dp)
-            .background(Color.White)
-            .border(
-                BorderStroke(
-                    width = 0.5.dp,
-                    color = Color(0xFF495E57),
-                ),
-                shape = RoundedCornerShape(10.dp)
-            )
+            .padding(horizontal = 8.dp)
+            .background(Color.White, shape = RoundedCornerShape(10.dp))
+            .border(width = 0.5.dp, color = Color(0xFF495E57), shape = RoundedCornerShape(10.dp))
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            // Display the image at the top of the card with rounded corners
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(178.dp)
             ) {
-                // Display the image
                 Image(
-                    painter = painterResource(id = R.drawable.image_4),
+                    painter = painterResource(id = imageResId),
                     contentDescription = null,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
@@ -122,25 +113,25 @@ fun HorizontalCardView() {
                         .align(Alignment.TopEnd)
                         .width(80.dp)
                         .height(30.dp),
-                    colors = ButtonDefaults.buttonColors(iconBackgroundColor),
+                    colors = ButtonDefaults.buttonColors(
+                        if (index == 1) Color(0xFF5B5B5B) else iconBackgroundColor,
+                    ),
                     contentPadding = PaddingValues(horizontal = 2.dp)
                 ) {
                     Text(
-                        text = "Active",
-                        color = Color.Black,
+                        text = if (index == 1) "Closed" else "Active",
+                        color = if (index == 1) Color.White else Color.Black,
                         fontFamily = inter_bold,
                         fontSize = 14.sp,
                     )
                 }
             }
-            // Display the text "HeadHunter Virtual Run" below the image
             Text(
-                text = "HeadHunter Virtual Run",
+                text = title,
                 fontFamily = inter_bold,
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
                 modifier = Modifier.padding(16.dp, 4.dp)
             )
-            // Create a row layout to display the icon and the text "5km Virtual Run"
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(horizontal = 16.dp)
@@ -158,7 +149,6 @@ fun HorizontalCardView() {
                         modifier = Modifier.padding(horizontal = 4.dp)
                     )
                 }
-                // Display the text "5km Virtual Run" next to the icon with some spacing
                 Text(
                     text = "5km Virtual Run",
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
@@ -166,11 +156,11 @@ fun HorizontalCardView() {
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
-            // Display a horizontal divider below the row layout
+            // horizontal divider
             Divider(modifier = Modifier.padding(8.dp))
+
             // Create another row layout to display the texts in two columns
             Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-                // Display the texts "Submission Opened" and "Multiple Submissions" in the left column
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -187,15 +177,14 @@ fun HorizontalCardView() {
                         style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                     )
                 }
-                // Display a vertical divider in the middle of the row layout
                 // Vertical Divider
                 Divider(
                     modifier = Modifier
                         .height(72.dp)
                         .width(1.dp)
-                        .padding(top = 8.dp)
+                        .padding(top = 4.dp)
                 )
-                // Display the texts "Progress" and "Result Submitted" in the right column
+                // Display the texts in the right column
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -217,4 +206,42 @@ fun HorizontalCardView() {
             }
         }
     }
+}
+
+
+@Composable
+fun ScrollableHorizontalCardViews() {
+    LazyRow(
+        modifier = Modifier
+            .background(color = Color(0xFFD9D9D9))
+            .padding(8.dp, bottom = 24.dp)
+    ) {
+        items(3) { index ->
+            val (title, imageResId) = getCardInfoForIndex(index)
+
+            HorizontalCardView(
+                imageResId = imageResId,
+                title = title,
+                index = index,
+            )
+        }
+    }
+}
+
+private fun getCardInfoForIndex(index: Int): Pair<String, Int> {
+    val title = when (index) {
+        0 -> "HeadHunter Virtual Run"
+        1 -> "New Year Virtual Run 2024"
+        2 -> "BEASTMODE \"Pain is Fuel' 42K VR"
+        else -> "Default Title"
+    }
+
+    val imageResId = when (index) {
+        0 -> R.drawable.image_4
+        1 -> R.drawable.image_5
+        2 -> R.drawable.image_6
+        else -> R.drawable.ic_launcher_foreground
+    }
+
+    return title to imageResId
 }

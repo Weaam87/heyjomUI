@@ -3,6 +3,7 @@ package com.example.heyjomui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                         // Include the Header composable
                         Header()
                         RegisteredEvents()
-                        HorizontalCardView()
+                        ScrollableHorizontalCardViews()
                     }
                 }
             }
@@ -49,6 +50,7 @@ fun RegisteredEvents() {
         text = "Registered Events (3)",
         modifier = Modifier
             .fillMaxWidth()
+            .background(color = Color(0xFFD9D9D9))
             .padding(16.dp),
         fontSize = 18.sp,
         color = Color.Black,
