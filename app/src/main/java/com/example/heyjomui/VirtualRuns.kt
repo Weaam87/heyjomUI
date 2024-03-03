@@ -7,8 +7,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -114,21 +115,29 @@ fun HorizontalCardView() {
                         )
                 )
 
-                // Add the "Active" button with a white background in the top-right corner
                 Button(
                     onClick = { /* Handle button click */ },
                     modifier = Modifier
-                        .padding(8.dp)
-                        .absolutePadding(top = 16.dp, right = 16.dp)
+                        .padding(16.dp)
+                        .align(Alignment.TopEnd)
+                        .width(80.dp)
+                        .height(30.dp),
+                    colors = ButtonDefaults.buttonColors(iconBackgroundColor),
+                    contentPadding = PaddingValues(horizontal = 2.dp)
                 ) {
-                    Text(text = "Active")
+                    Text(
+                        text = "Active",
+                        color = Color.Black,
+                        fontFamily = inter_bold,
+                        fontSize = 14.sp,
+                    )
                 }
             }
             // Display the text "HeadHunter Virtual Run" below the image
             Text(
                 text = "HeadHunter Virtual Run",
                 fontFamily = inter_bold,
-                style = MaterialTheme.typography.headlineSmall.copy(fontSize = 16.sp),
+                style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
                 modifier = Modifier.padding(16.dp, 4.dp)
             )
             // Create a row layout to display the icon and the text "5km Virtual Run"
@@ -162,18 +171,20 @@ fun HorizontalCardView() {
             // Create another row layout to display the texts in two columns
             Row(modifier = Modifier.padding(horizontal = 16.dp)) {
                 // Display the texts "Submission Opened" and "Multiple Submissions" in the left column
-                Column(modifier = Modifier
-                    .weight(1f)
-                    .padding(bottom = 32.dp, top = 16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 32.dp, top = 16.dp)
+                ) {
                     Text(
                         text = "Submission Opened",
                         fontFamily = inter_regular,
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
+                        style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                     )
                     Text(
                         text = "Multiple Submissions",
                         fontFamily = inter_bold,
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
+                        style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                     )
                 }
                 // Display a vertical divider in the middle of the row layout
@@ -185,19 +196,21 @@ fun HorizontalCardView() {
                         .padding(top = 8.dp)
                 )
                 // Display the texts "Progress" and "Result Submitted" in the right column
-                Column(modifier = Modifier
-                    .weight(1f)
-                    .padding(bottom = 32.dp, top = 16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 32.dp, top = 16.dp)
+                ) {
                     Text(
                         text = "Progress",
                         fontFamily = inter_regular,
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
+                        style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                         modifier = Modifier.padding(start = 16.dp)
                     )
                     Text(
                         text = "Result Submitted",
                         fontFamily = inter_bold,
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
+                        style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                         modifier = Modifier.padding(start = 16.dp)
                     )
                 }
@@ -205,4 +218,3 @@ fun HorizontalCardView() {
         }
     }
 }
-
