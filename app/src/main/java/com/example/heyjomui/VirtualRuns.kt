@@ -46,7 +46,6 @@ fun Header() {
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp),
-        contentColor = Color.Black,
     ) {
         Row(
             modifier = Modifier
@@ -58,6 +57,7 @@ fun Header() {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,
+                tint = Color.Black,
                 modifier = Modifier.padding(start = 16.dp)
             )
             Text(
@@ -68,6 +68,7 @@ fun Header() {
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontFamily = inter_bold,
+                color = Color.Black,
             )
         }
     }
@@ -82,8 +83,8 @@ fun RegisteredEvents() {
             .background(color = Color(0xFFD9D9D9))
             .padding(16.dp, 8.dp),
         fontSize = 18.sp,
-        color = Color.Black,
         textAlign = TextAlign.Start,
+        color = Color.Black,
         fontFamily = inter_bold
     )
 }
@@ -146,6 +147,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
                 text = title,
                 fontFamily = inter_bold,
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
+                color = Color.Black,
                 modifier = Modifier.padding(16.dp, 4.dp)
             )
             Row(
@@ -169,6 +171,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
                     text = "5km Virtual Run",
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                     fontFamily = inter_regular,
+                    color = Color.Black,
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
@@ -185,11 +188,13 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
                     Text(
                         text = "Submission Opened",
                         fontFamily = inter_regular,
+                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                     )
                     Text(
                         text = "Multiple Submissions",
                         fontFamily = inter_bold,
+                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                     )
                 }
@@ -209,12 +214,14 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
                     Text(
                         text = "Progress",
                         fontFamily = inter_regular,
+                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                         modifier = Modifier.padding(start = 16.dp)
                     )
                     Text(
                         text = "Result Submitted",
                         fontFamily = inter_bold,
+                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
                         modifier = Modifier.padding(start = 16.dp)
                     )
@@ -256,7 +263,6 @@ fun VirtualRuns() {
             .fillMaxWidth()
             .padding(16.dp, 8.dp),
         fontSize = 18.sp,
-        color = Color.Black,
         textAlign = TextAlign.Start,
         fontFamily = inter_bold
     )
@@ -293,6 +299,7 @@ fun VerticalCardView(imageResId: Int, title: String) {
             Text(
                 text = title,
                 fontFamily = inter_bold,
+                color = Color.Black,
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
                 modifier = Modifier.padding(16.dp, 4.dp)
             )
@@ -316,6 +323,7 @@ fun VerticalCardView(imageResId: Int, title: String) {
                 }
                 Text(
                     text = "5km Virtual Run",
+                    color = Color.Black,
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                     fontFamily = inter_regular,
                     modifier = Modifier.padding(start = 8.dp)
