@@ -3,6 +3,7 @@ package com.example.heyjomui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -226,12 +227,15 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
 
 @Composable
 fun ScrollableHorizontalCardViews() {
-    LazyRow(
+    val state = rememberScrollState()
+
+    Row(
         modifier = Modifier
             .background(color = Color(0xFFD9D9D9))
             .padding(8.dp, 8.dp, 8.dp, 24.dp)
+            .horizontalScroll(state)
     ) {
-        items(3) { index ->
+        repeat(3) { index ->
             val (title, imageResId) = getHorizontalCardInfoForIndex(index)
 
             HorizontalCardView(
@@ -242,6 +246,7 @@ fun ScrollableHorizontalCardViews() {
         }
     }
 }
+
 
 @Composable
 fun VirtualRuns() {
@@ -355,4 +360,20 @@ fun getVerticalCardInfoForIndex(index: Int): Pair<String, Int> {
     }
 
     return title to imageResId
+}
+
+@Composable
+fun VerticalCardViewsList() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        repeat(3) { index ->
+            val (title, imageResId) = getVerticalCardInfoForIndex(index)
+            VerticalCardView(
+                imageResId = imageResId,
+                title = title
+            )
+        }
+    }
 }
