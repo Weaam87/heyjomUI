@@ -1,4 +1,4 @@
-package com.example.heyjomui
+package screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
 
