@@ -3,6 +3,7 @@ package screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +40,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
@@ -93,11 +96,14 @@ fun RegisteredEvents() {
 }
 
 @Composable
-fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
+fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController: NavController) {
     val iconBackgroundColor = Color(0xFFFBBA00)
 
     Row(
         modifier = Modifier
+            .clickable {
+                navController.navigate("virtualRunDetailScreen")
+            }
             .width(340.dp)
             .padding(horizontal = 8.dp)
             .background(Color.White, shape = RoundedCornerShape(10.dp))
@@ -236,7 +242,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int) {
 
 
 @Composable
-fun ScrollableHorizontalCardViews() {
+fun ScrollableHorizontalCardViews(navController: NavController) {
     val state = rememberScrollState()
 
     Row(
@@ -252,6 +258,7 @@ fun ScrollableHorizontalCardViews() {
                 imageResId = imageResId,
                 title = title,
                 index = index,
+                navController = navController
             )
         }
     }
@@ -390,7 +397,7 @@ fun VerticalCardViewsList() {
 }
 
 @Composable
-fun VirtualRunsScreen() {
+fun VirtualRunsScreen(navController: NavHostController) {
 
     Column(
         modifier = Modifier
@@ -404,7 +411,7 @@ fun VirtualRunsScreen() {
         ) {
             RegisteredEvents()
 
-            ScrollableHorizontalCardViews()
+            ScrollableHorizontalCardViews(navController)
 
             VirtualRuns()
 

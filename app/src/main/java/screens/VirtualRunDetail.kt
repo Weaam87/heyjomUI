@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 
 
 @Composable
-fun VirtualRunDetail() {
+fun VirtualRunDetailScreen() {
     Column {
         Text(text = "Virtual Run Detail")
     }
