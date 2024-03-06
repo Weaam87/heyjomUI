@@ -95,7 +95,7 @@ fun VirtualRunDetailScreen(navController: NavHostController) {
             ImageSection()
             EventInfoSection()
         }
-        ActionButtonsSection()
+        ActionButtonsSection(navController)
     }
 }
 
@@ -270,7 +270,7 @@ fun EventInfoSection() {
 
 
 @Composable
-fun ActionButtonsSection() {
+fun ActionButtonsSection(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -291,7 +291,7 @@ fun ActionButtonsSection() {
             )
         }
         Button(
-            onClick = { },
+            onClick = { navController.navigate("SubmitResultScreen") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
