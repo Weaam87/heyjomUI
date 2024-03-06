@@ -114,8 +114,6 @@ fun ImageSection() {
 @Composable
 fun EventInfoSection() {
 
-    val iconBackgroundColor = Color(0xFFFBBA00)
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -139,7 +137,7 @@ fun EventInfoSection() {
                 // Display the icon inside a circle with the icon background color
                 Surface(
                     shape = CircleShape,
-                    color = iconBackgroundColor,
+                    color = yellowColor,
                     modifier = Modifier
                         .size(32.dp)
                 ) {
@@ -218,7 +216,7 @@ fun EventInfoSection() {
                     Icon(
                         painter = painterResource(id = R.drawable.clock),
                         contentDescription = null,
-                        tint = iconBackgroundColor,
+                        tint = yellowColor,
                         modifier = Modifier
                             .size(24.dp)
                     )
@@ -249,7 +247,7 @@ fun EventInfoSection() {
                     Icon(
                         painter = painterResource(id = R.drawable.clock),
                         contentDescription = null,
-                        tint = iconBackgroundColor,
+                        tint = yellowColor,
                         modifier = Modifier
                             .size(24.dp)
                     )
