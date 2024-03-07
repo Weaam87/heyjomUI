@@ -1,5 +1,9 @@
 package screens
 
+import android.content.Context
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,19 +33,27 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
+import java.io.File
+import java.io.IOException
 
 
 private val yellowColor = Color(0xFFFBBA00)
@@ -51,6 +63,7 @@ private val darkPurple = Color(0xFF120D26)
 private val lightGray = Color(0xFFCCCCCC)
 private val charcoalGray = Color(0xFF717171)
 
+private const val IMAGE_FILENAME = "selected_image.jpg"
 
 @Composable
 fun SubmitResultScreen(navController: NavHostController) {
@@ -98,7 +111,7 @@ fun SubmitResultScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .height(560.dp)
         ) {
-            UploadImageSection()
+            UploadImageSection(context = LocalContext.current)
             SubmitEventInfoSection()
         }
         SubmitButtonsSection()
@@ -106,30 +119,129 @@ fun SubmitResultScreen(navController: NavHostController) {
 }
 
 @Composable
-fun UploadImageSection() {
+fun UploadImageSection(context: Context) {
+    var selectedImageUri by remember { mutableStateOf(loadImageFromStorage(context)) }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            selectedImageUri = uri
+            saveImageToStorage(context, uri)
+        }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(220.dp)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.upload_image_section),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-        )
+        if (selectedImageUri != null) {
 
-        Image(
-            painter = painterResource(id = R.drawable.upload_icon),
-            contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .width(96.dp)
-                .height(96.dp)
-        )
+            Image(
+                painter = rememberImagePainter(data = selectedImageUri),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .width(120.dp)
+                    .height(240.dp)
+                    .padding(bottom = 16.dp)
+                    .align(Alignment.Center)
+            )
+
+            Button(
+                onClick = {
+                    selectedImageUri?.let {
+                        deleteImageFromStorage(context)
+                        selectedImageUri = null
+                    }
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp, 0.dp, 16.dp, 40.dp)
+            ) {
+                Text(text = "Delete")
+            }
+        } else {
+            // Display the default image and the upload icon
+            Image(
+                painter = painterResource(id = R.drawable.upload_image_section),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.upload_icon),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .width(96.dp)
+                    .height(96.dp)
+                    .clickable {
+                        launcher.launch("image/*")
+                    }
+            )
+        }
     }
 }
+
+/**
+ * Save the selected image to internal storage using the specified filename.
+ *
+ * @param context The application context.
+ * @param uri The Uri of the selected image.
+ */
+private fun saveImageToStorage(context: Context, uri: Uri?) {
+    // Check if the URI is not null
+    uri?.let {
+        try {
+            // Open an input stream to read the selected image content
+            val inputStream = context.contentResolver.openInputStream(it)
+
+            // Open an output stream to write the image content to a file in internal storage
+            val outputStream = context.openFileOutput(IMAGE_FILENAME, Context.MODE_PRIVATE)
+
+            // Use extension functions 'use' to automatically close streams after use
+            inputStream?.use { input ->
+                outputStream?.use { output ->
+                    // Copy the content from the input stream to the output stream
+                    input.copyTo(output)
+                }
+            }
+        } catch (e: IOException) {
+            // Handle IOException, for example, by printing the stack trace
+            e.printStackTrace()
+        }
+    }
+}
+
+
+private fun deleteImageFromStorage(context: Context) {
+    context.deleteFile(IMAGE_FILENAME)
+}
+
+/**
+ * Load the selected image Uri from internal storage using the specified filename.
+ *
+ * @param context The application context.
+ * @return The Uri of the selected image if it exists, otherwise null.
+ */
+private fun loadImageFromStorage(context: Context): Uri? {
+    try {
+        // Create a File object representing the location of the stored image in internal storage
+        val file = File(context.filesDir, IMAGE_FILENAME)
+
+        // Check if the file exists
+        if (file.exists()) {
+            // Return the Uri of the stored image file
+            return Uri.fromFile(file)
+        }
+    } catch (e: Exception) {
+        // Handle any exceptions that may occur, for example, by printing the stack trace
+        e.printStackTrace()
+    }
+
+    // Return null if the image file doesn't exist or an exception occurs
+    return null
+}
+
 
 @Composable
 fun SubmitEventInfoSection() {
@@ -310,7 +422,6 @@ fun SubmitEventInfoSection() {
         }
     }
 }
-
 
 @Composable
 fun SubmitButtonsSection() {
