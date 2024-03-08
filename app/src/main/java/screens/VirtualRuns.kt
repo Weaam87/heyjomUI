@@ -56,7 +56,7 @@ fun Header() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFFBBA00)),
+                .background(Color(R.color.yellowColor)),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -86,7 +86,7 @@ fun RegisteredEvents() {
         text = "Registered Events (3)",
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color(0xFFD9D9D9))
+            .background(color = Color(R.color.lightGray))
             .padding(16.dp, 8.dp),
         fontSize = 18.sp,
         textAlign = TextAlign.Start,
@@ -97,7 +97,6 @@ fun RegisteredEvents() {
 
 @Composable
 fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController: NavController) {
-    val iconBackgroundColor = Color(0xFFFBBA00)
 
     Row(
         modifier = Modifier
@@ -107,7 +106,11 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
             .width(340.dp)
             .padding(horizontal = 8.dp)
             .background(Color.White, shape = RoundedCornerShape(10.dp))
-            .border(width = 0.5.dp, color = Color(0xFF495E57), shape = RoundedCornerShape(10.dp))
+            .border(
+                width = 0.5.dp,
+                color = Color(R.color.darkSeaGreen),
+                shape = RoundedCornerShape(10.dp)
+            )
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box(
@@ -140,7 +143,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
                         .width(80.dp)
                         .height(30.dp),
                     colors = ButtonDefaults.buttonColors(
-                        if (index == 1) Color(0xFF5B5B5B) else iconBackgroundColor,
+                        if (index == 1) Color(R.color.charcoalGray) else Color(R.color.yellowColor),
                     ),
                     contentPadding = PaddingValues(horizontal = 2.dp)
                 ) {
@@ -166,7 +169,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
                 // Display the icon inside a circle with the icon background color
                 Surface(
                     shape = CircleShape,
-                    color = iconBackgroundColor,
+                    color = Color(R.color.yellowColor),
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
@@ -247,7 +250,7 @@ fun ScrollableHorizontalCardViews(navController: NavController) {
 
     Row(
         modifier = Modifier
-            .background(color = Color(0xFFD9D9D9))
+            .background(color = Color(R.color.lightGray))
             .padding(8.dp, 8.dp, 8.dp, 24.dp)
             .horizontalScroll(state)
     ) {
@@ -280,14 +283,18 @@ fun VirtualRuns() {
 
 @Composable
 fun VerticalCardView(imageResId: Int, title: String) {
-    val iconBackgroundColor = Color(0xFFFBBA00)
+    val iconBackgroundColor = Color(R.color.yellowColor)
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp, 8.dp)
             .background(Color.White, shape = RoundedCornerShape(10.dp))
-            .border(width = 0.5.dp, color = Color(0xFF495E57), shape = RoundedCornerShape(10.dp))
+            .border(
+                width = 0.5.dp,
+                color = Color(R.color.darkSeaGreen),
+                shape = RoundedCornerShape(10.dp)
+            )
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Image(

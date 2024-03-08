@@ -42,18 +42,12 @@ import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
 
-
-private val yellowColor = Color(0xFFFBBA00)
-private val LavenderGray = Color(0xFFF2F1F9)
-private val mutedGray = Color(0xFF747688)
-private val darkPurple = Color(0xFF120D26)
-
 @Composable
 fun VirtualRunDetailScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LavenderGray)
+            .background(Color(R.color.lavenderGray))
             .verticalScroll(state = rememberScrollState())
     ) {
         Surface(
@@ -64,7 +58,7 @@ fun VirtualRunDetailScreen(navController: NavHostController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(yellowColor),
+                    .background(Color(R.color.yellowColor)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -140,7 +134,7 @@ fun EventInfoSection() {
                 // Display the icon inside a circle with the icon background color
                 Surface(
                     shape = CircleShape,
-                    color = yellowColor,
+                    color = Color(R.color.yellowColor),
                     modifier = Modifier
                         .size(32.dp)
                 ) {
@@ -186,14 +180,14 @@ fun EventInfoSection() {
                 Column {
                     Text(
                         text = "Alan Walker",
-                        color = darkPurple,
+                        color = Color(R.color.darkPurple),
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                         fontFamily = inter_bold,
                         modifier = Modifier.padding(start = 8.dp)
                     )
                     Text(
                         text = "Distance: 5.00 Kilometers",
-                        color = mutedGray,
+                        color = Color(R.color.mutedGray),
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                         fontFamily = inter_regular,
                         modifier = Modifier.padding(start = 8.dp)
@@ -203,7 +197,7 @@ fun EventInfoSection() {
             Text(
                 text = "When You Can Race",
                 fontFamily = inter_bold,
-                color = darkPurple,
+                color = Color(R.color.darkPurple),
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
                 modifier = Modifier.padding(16.dp, 8.dp, 8.dp, 4.dp)
             )
@@ -219,7 +213,7 @@ fun EventInfoSection() {
                     Icon(
                         painter = painterResource(id = R.drawable.clock),
                         contentDescription = null,
-                        tint = yellowColor,
+                        tint = Color(R.color.yellowColor),
                         modifier = Modifier
                             .size(24.dp)
                     )
@@ -250,7 +244,7 @@ fun EventInfoSection() {
                     Icon(
                         painter = painterResource(id = R.drawable.clock),
                         contentDescription = null,
-                        tint = yellowColor,
+                        tint = Color(R.color.yellowColor),
                         modifier = Modifier
                             .size(24.dp)
                     )
@@ -282,7 +276,7 @@ fun ActionButtonsSection(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
-            colors = ButtonDefaults.buttonColors(yellowColor)
+            colors = ButtonDefaults.buttonColors(Color(R.color.yellowColor))
         ) {
             Text(
                 text = "Link Recent Activity",
