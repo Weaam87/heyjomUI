@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ fun SubmitResultScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(R.color.lavenderGray))
+            .background(colorResource(id = R.color.lavenderGray))
             .verticalScroll(state = rememberScrollState())
     ) {
         Surface(
@@ -75,7 +76,7 @@ fun SubmitResultScreen(navController: NavHostController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(R.color.yellowColor)),
+                    .background(colorResource(id = R.color.yellowColor)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -248,7 +249,7 @@ fun SubmitEventInfoSection() {
             .background(Color.White, shape = RoundedCornerShape(10.dp))
             .border(
                 width = 0.5.dp,
-                color = Color(R.color.mutedGray),
+                color = colorResource(id = R.color.mutedGray),
                 shape = RoundedCornerShape(10.dp)
             )
     ) {
@@ -268,7 +269,7 @@ fun SubmitEventInfoSection() {
                 // Display the icon inside a circle with the icon background color
                 Surface(
                     shape = CircleShape,
-                    color = Color(R.color.yellowColor),
+                    color = colorResource(id = R.color.yellowColor),
                     modifier = Modifier
                         .size(32.dp)
                 ) {
@@ -297,14 +298,14 @@ fun SubmitEventInfoSection() {
                 Column {
                     Text(
                         text = "Category",
-                        color = Color(R.color.mutedGray),
+                        color = colorResource(id = R.color.mutedGray),
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                         fontFamily = inter_regular,
                         modifier = Modifier.padding(start = 8.dp)
                     )
                     Text(
                         text = "Category 2: 5KM (Men open are 18-45 yo)",
-                        color = Color(R.color.darkPurple),
+                        color = colorResource(id = R.color.darkPurple),
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                         fontFamily = inter_bold,
                         modifier = Modifier.padding(start = 8.dp)
@@ -339,7 +340,7 @@ fun SubmitEventInfoSection() {
                             .height(48.dp)
                             .border(
                                 width = 1.dp,
-                                color = Color(R.color.lightGray),
+                                color = colorResource(id = R.color.lightGray),
                                 shape = RoundedCornerShape(50.dp)
                             )
                             .weight(0.7f),
@@ -351,12 +352,12 @@ fun SubmitEventInfoSection() {
                             modifier = Modifier
                                 .fillMaxSize(),
                             textStyle = LocalTextStyle.current.copy(
-                                color = Color(R.color.charcoalGray),
+                                color = colorResource(id = R.color.charcoalGray),
                                 fontSize = 14.sp,
                                 textAlign = TextAlign.Center
                             ),
                             colors = OutlinedTextFieldDefaults.colors(
-                                cursorColor = Color(R.color.charcoalGray),
+                                cursorColor = colorResource(id = R.color.charcoalGray),
                                 focusedBorderColor = Transparent,
                                 unfocusedBorderColor = Transparent,
                             )
@@ -385,7 +386,7 @@ fun SubmitEventInfoSection() {
                             .height(48.dp)
                             .border(
                                 width = 1.dp,
-                                color = Color(R.color.lightGray),
+                                color = colorResource(id = R.color.lightGray),
                                 shape = RoundedCornerShape(50.dp)
                             )
                             .weight(0.7f)
@@ -397,12 +398,12 @@ fun SubmitEventInfoSection() {
                                 .fillMaxSize()
                                 .align(Alignment.Center),
                             textStyle = LocalTextStyle.current.copy(
-                                color = Color(R.color.charcoalGray),
+                                color = colorResource(id = R.color.charcoalGray),
                                 fontSize = 14.sp,
                                 textAlign = TextAlign.Center
                             ),
                             colors = OutlinedTextFieldDefaults.colors(
-                                cursorColor = Color(R.color.charcoalGray),
+                                cursorColor = colorResource(id = R.color.charcoalGray),
                                 focusedBorderColor = Transparent,
                                 unfocusedBorderColor = Transparent,
                             )
@@ -412,7 +413,7 @@ fun SubmitEventInfoSection() {
                 }
                 Text(
                     text = "e.g: Moving Time / Total Distance Time / Duration",
-                    color = Color(R.color.charcoalGray),
+                    color = colorResource(id = R.color.charcoalGray),
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 10.sp),
                     fontFamily = inter_regular,
                     modifier = Modifier.padding(32.dp, 8.dp)
@@ -435,7 +436,7 @@ fun SubmitButtonsSection() {
                 .fillMaxWidth()
                 .padding(top = 16.dp)
                 .height(50.dp),
-            colors = ButtonDefaults.buttonColors(Color(R.color.lightGray))
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.lightGray))
         ) {
             Text(
                 text = "Submit",
@@ -447,7 +448,7 @@ fun SubmitButtonsSection() {
         Text(
             text = "By clicking Submit, you declare that your submission\n" +
                     "is truthful and agree to our Terms & Conditions",
-            color = Color(R.color.charcoalGray),
+            color = colorResource(id = R.color.charcoalGray),
             style = MaterialTheme.typography.bodyMedium.copy(fontSize = 10.sp),
             fontFamily = inter_regular,
             modifier = Modifier

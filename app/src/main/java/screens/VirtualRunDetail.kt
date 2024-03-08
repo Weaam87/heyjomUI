@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -47,7 +48,7 @@ fun VirtualRunDetailScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(R.color.lavenderGray))
+            .background(colorResource(id = R.color.lavenderGray))
             .verticalScroll(state = rememberScrollState())
     ) {
         Surface(
@@ -58,7 +59,7 @@ fun VirtualRunDetailScreen(navController: NavHostController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(R.color.yellowColor)),
+                    .background(colorResource(id = R.color.yellowColor)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -116,7 +117,11 @@ fun EventInfoSection() {
             .fillMaxWidth()
             .padding(16.dp, 190.dp, 16.dp, 8.dp)
             .background(Color.White, shape = RoundedCornerShape(10.dp))
-            .border(width = 0.5.dp, color = Color(0xFF495E57), shape = RoundedCornerShape(10.dp))
+            .border(
+                width = 0.5.dp,
+                color = colorResource(id = R.color.darkSeaGreen),
+                shape = RoundedCornerShape(10.dp)
+            )
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -134,7 +139,7 @@ fun EventInfoSection() {
                 // Display the icon inside a circle with the icon background color
                 Surface(
                     shape = CircleShape,
-                    color = Color(R.color.yellowColor),
+                    color = colorResource(id = R.color.yellowColor),
                     modifier = Modifier
                         .size(32.dp)
                 ) {
@@ -180,14 +185,14 @@ fun EventInfoSection() {
                 Column {
                     Text(
                         text = "Alan Walker",
-                        color = Color(R.color.darkPurple),
+                        color = colorResource(id = R.color.darkPurple),
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                         fontFamily = inter_bold,
                         modifier = Modifier.padding(start = 8.dp)
                     )
                     Text(
                         text = "Distance: 5.00 Kilometers",
-                        color = Color(R.color.mutedGray),
+                        color = colorResource(id = R.color.mutedGray),
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 12.sp),
                         fontFamily = inter_regular,
                         modifier = Modifier.padding(start = 8.dp)
@@ -197,7 +202,7 @@ fun EventInfoSection() {
             Text(
                 text = "When You Can Race",
                 fontFamily = inter_bold,
-                color = Color(R.color.darkPurple),
+                color = colorResource(id = R.color.darkPurple),
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
                 modifier = Modifier.padding(16.dp, 8.dp, 8.dp, 4.dp)
             )
@@ -213,7 +218,7 @@ fun EventInfoSection() {
                     Icon(
                         painter = painterResource(id = R.drawable.clock),
                         contentDescription = null,
-                        tint = Color(R.color.yellowColor),
+                        tint = colorResource(id = R.color.yellowColor),
                         modifier = Modifier
                             .size(24.dp)
                     )
@@ -244,7 +249,7 @@ fun EventInfoSection() {
                     Icon(
                         painter = painterResource(id = R.drawable.clock),
                         contentDescription = null,
-                        tint = Color(R.color.yellowColor),
+                        tint = colorResource(id = R.color.yellowColor),
                         modifier = Modifier
                             .size(24.dp)
                     )
@@ -276,7 +281,7 @@ fun ActionButtonsSection(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
-            colors = ButtonDefaults.buttonColors(Color(R.color.yellowColor))
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.yellowColor))
         ) {
             Text(
                 text = "Link Recent Activity",

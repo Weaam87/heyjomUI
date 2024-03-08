@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -45,6 +46,7 @@ import androidx.navigation.NavHostController
 import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
+
 
 @Composable
 fun Header() {
@@ -56,7 +58,7 @@ fun Header() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(R.color.yellowColor)),
+                .background(colorResource(id = R.color.yellowColor)),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -86,7 +88,7 @@ fun RegisteredEvents() {
         text = "Registered Events (3)",
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color(R.color.lightGray))
+            .background(colorResource(id = R.color.lavenderGray))
             .padding(16.dp, 8.dp),
         fontSize = 18.sp,
         textAlign = TextAlign.Start,
@@ -108,7 +110,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
             .background(Color.White, shape = RoundedCornerShape(10.dp))
             .border(
                 width = 0.5.dp,
-                color = Color(R.color.darkSeaGreen),
+                color = colorResource(id = R.color.darkSeaGreen),
                 shape = RoundedCornerShape(10.dp)
             )
     ) {
@@ -143,7 +145,9 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
                         .width(80.dp)
                         .height(30.dp),
                     colors = ButtonDefaults.buttonColors(
-                        if (index == 1) Color(R.color.charcoalGray) else Color(R.color.yellowColor),
+                        if (index == 1) colorResource(id = R.color.charcoalGray) else colorResource(
+                            id = R.color.yellowColor
+                        ),
                     ),
                     contentPadding = PaddingValues(horizontal = 2.dp)
                 ) {
@@ -169,7 +173,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
                 // Display the icon inside a circle with the icon background color
                 Surface(
                     shape = CircleShape,
-                    color = Color(R.color.yellowColor),
+                    color = colorResource(id = R.color.yellowColor),
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
@@ -250,7 +254,7 @@ fun ScrollableHorizontalCardViews(navController: NavController) {
 
     Row(
         modifier = Modifier
-            .background(color = Color(R.color.lightGray))
+            .background(colorResource(id = R.color.lavenderGray))
             .padding(8.dp, 8.dp, 8.dp, 24.dp)
             .horizontalScroll(state)
     ) {
@@ -283,7 +287,6 @@ fun VirtualRuns() {
 
 @Composable
 fun VerticalCardView(imageResId: Int, title: String) {
-    val iconBackgroundColor = Color(R.color.yellowColor)
 
     Row(
         modifier = Modifier
@@ -292,7 +295,7 @@ fun VerticalCardView(imageResId: Int, title: String) {
             .background(Color.White, shape = RoundedCornerShape(10.dp))
             .border(
                 width = 0.5.dp,
-                color = Color(R.color.darkSeaGreen),
+                color = colorResource(id = R.color.darkSeaGreen),
                 shape = RoundedCornerShape(10.dp)
             )
     ) {
@@ -327,7 +330,7 @@ fun VerticalCardView(imageResId: Int, title: String) {
                 // Display the icon inside a circle with the icon background color
                 Surface(
                     shape = CircleShape,
-                    color = iconBackgroundColor,
+                    color = colorResource(id = R.color.yellowColor),
                     modifier = Modifier
                         .size(32.dp)
                 ) {
