@@ -18,8 +18,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -71,6 +73,7 @@ fun SubmitResultScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(LavenderGray)
+            .verticalScroll(state = rememberScrollState())
     ) {
         Surface(
             modifier = Modifier
@@ -109,7 +112,7 @@ fun SubmitResultScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(560.dp)
+                .height(554.dp)
         ) {
             UploadImageSection(context = LocalContext.current)
             SubmitEventInfoSection()
@@ -248,7 +251,7 @@ fun SubmitEventInfoSection() {
 
     Row(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth() // .padding(16.dp, 190.dp, 16.dp, 8.dp).........
             .padding(16.dp, 190.dp, 16.dp, 8.dp)
             .background(Color.White, shape = RoundedCornerShape(10.dp))
             .border(width = 0.5.dp, color = mutedGray, shape = RoundedCornerShape(10.dp))
@@ -416,7 +419,7 @@ fun SubmitEventInfoSection() {
                     color = charcoalGray,
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 10.sp),
                     fontFamily = inter_regular,
-                    modifier = Modifier.padding(32.dp, 12.dp)
+                    modifier = Modifier.padding(32.dp, 8.dp)
                 )
             }
         }
@@ -428,7 +431,7 @@ fun SubmitButtonsSection() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp,8.dp)
     ) {
         Button(
             onClick = { },

@@ -12,7 +12,7 @@ import screens.VirtualRunsScreen
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "SubmitResultScreen") {
+    NavHost(navController = navController, startDestination = "virtualRunsScreen") {
         composable("virtualRunsScreen") { VirtualRunsScreen(navController) }
         composable("virtualRunDetailScreen") { VirtualRunDetailScreen(navController) }
         composable("SubmitResultScreen") { SubmitResultScreen(navController) }
