@@ -20,14 +20,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +65,7 @@ fun VirtualRunDetailScreen(navController: NavHostController) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
                     tint = Color.Black,
                     modifier = Modifier
@@ -159,7 +160,7 @@ fun EventInfoSection() {
                 )
             }
             // horizontal divider
-            Divider(modifier = Modifier.padding(bottom = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
 
             Text(
                 text = "Who’s Racing",
@@ -236,7 +237,7 @@ fun EventInfoSection() {
                         .height(20.dp)
                 ) {
                     // Vertical Divider
-                    Divider(
+                    VerticalDivider(
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(1.dp)

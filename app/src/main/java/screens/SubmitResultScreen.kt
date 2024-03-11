@@ -23,10 +23,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -81,7 +81,7 @@ fun SubmitResultScreen(navController: NavHostController) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
                     tint = Color.Black,
                     modifier = Modifier
@@ -289,7 +289,7 @@ fun SubmitEventInfoSection() {
                 )
             }
             // horizontal divider
-            Divider(modifier = Modifier.padding(bottom = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -313,7 +313,7 @@ fun SubmitEventInfoSection() {
                 }
             }
             // horizontal divider
-            Divider(modifier = Modifier.padding(bottom = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(bottom = 8.dp))
 
             Column(
                 modifier = Modifier.padding(16.dp, 0.dp, 16.dp, 16.dp)
