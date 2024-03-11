@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -124,8 +125,7 @@ fun RegisteredEvents() {
 }
 
 @Composable
-fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController: NavController) {
-
+fun HorizontalCardView(event: HeyJomEventsData, navController: NavController) {
     Row(
         modifier = Modifier
             .clickable {
@@ -147,7 +147,7 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
                     .height(178.dp)
             ) {
                 Image(
-                    painter = painterResource(id = imageResId),
+                    painter = rememberImagePainter(data = event.banner),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -171,25 +171,27 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
                         .width(80.dp)
                         .height(30.dp),
                     colors = ButtonDefaults.buttonColors(
-                        if (index == 1) colorResource(id = R.color.charcoalGray) else colorResource(
+                        if (event.id == 10) colorResource(id = R.color.charcoalGray) else colorResource(
                             id = R.color.yellowColor
                         ),
                     ),
                     contentPadding = PaddingValues(horizontal = 2.dp)
                 ) {
                     Text(
-                        text = if (index == 1) "Closed" else "Active",
-                        color = if (index == 1) Color.White else Color.Black,
+                        text = if (event.id == 10) "Closed" else "Active",
+                        color = if (event.id == 10) Color.White else Color.Black,
                         fontFamily = inter_bold,
                         fontSize = 14.sp,
                     )
                 }
             }
             Text(
-                text = title,
+                event.name,
                 fontFamily = inter_bold,
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
                 color = Color.Black,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(16.dp, 4.dp)
             )
             Row(
@@ -273,30 +275,19 @@ fun HorizontalCardView(imageResId: Int, title: String, index: Int, navController
     }
 }
 
-
 @Composable
-fun ScrollableHorizontalCardViews(navController: NavController) {
-    val state = rememberScrollState()
-
+fun ScrollableHorizontalCardViews(navController: NavController, events: List<HeyJomEventsData>) {
     Row(
         modifier = Modifier
             .background(colorResource(id = R.color.lavenderGray))
             .padding(8.dp, 8.dp, 8.dp, 24.dp)
-            .horizontalScroll(state)
+            .horizontalScroll(rememberScrollState())
     ) {
-        repeat(3) { index ->
-            val (title, imageResId) = getHorizontalCardInfoForIndex(index)
-
-            HorizontalCardView(
-                imageResId = imageResId,
-                title = title,
-                index = index,
-                navController = navController
-            )
+        events.forEach { event ->
+            HorizontalCardView(event = event, navController = navController)
         }
     }
 }
-
 
 @Composable
 fun VirtualRuns() {
@@ -380,25 +371,6 @@ fun VerticalCardView(event: HeyJomEventsData) {
     }
 }
 
-private fun getHorizontalCardInfoForIndex(index: Int): Pair<String, Int> {
-    val title = when (index) {
-        0 -> "HeadHunter Virtual Run"
-        1 -> "New Year Virtual Run 2024"
-        2 -> "BEASTMODE \"Pain is Fuel' 42K VR"
-        else -> "Default Title"
-    }
-
-    val imageResId = when (index) {
-        0 -> R.drawable.image_4
-        1 -> R.drawable.image_5
-        2 -> R.drawable.image_6
-        else -> R.drawable.ic_launcher_foreground
-    }
-
-    return title to imageResId
-}
-
-
 @Composable
 fun VerticalCardViewsList(events: List<HeyJomEventsData>) {
     Column(
@@ -441,8 +413,7 @@ fun VirtualRunsScreen(navController: NavHostController) {
                 )
                 Toast("Error fetching events: ${getError()}")
             } else {
-                // Display the content when eventsList is not empty
-                ScrollableHorizontalCardViews(navController)
+                ScrollableHorizontalCardViews(navController, events = eventsList)
                 VirtualRuns()
                 VerticalCardViewsList(events = eventsList)
             }
