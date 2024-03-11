@@ -1,5 +1,6 @@
 package screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,9 +44,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
+import kotlinx.coroutines.runBlocking
+import network.HeyJomApi
+import network.HeyJomEventsData
+
+val apiService = HeyJomApi.retrofitService
+
+// Fetch the list of events using a coroutine
+val eventsList: List<HeyJomEventsData> = try {
+    runBlocking {
+        Log.d("MyApp", "Attempting to fetch events...")
+
+        // Fetch the response object
+        val response = apiService.getEvents()
+
+        // Check if the response contains the list of events
+        val events = response.events
+
+        Log.d("MyApp", "Successfully fetched ${events.size} events.")
+        events
+    }
+} catch (e: Exception) {
+    Log.e("MyApp", "Error fetching events: ${e.message}")
+    emptyList()
+}
 
 
 @Composable
@@ -286,7 +312,8 @@ fun VirtualRuns() {
 }
 
 @Composable
-fun VerticalCardView(imageResId: Int, title: String) {
+fun VerticalCardView(event: HeyJomEventsData) {
+    Log.d("MyApp", "Image URL: ${event.banner}")
 
     Row(
         modifier = Modifier
@@ -301,7 +328,7 @@ fun VerticalCardView(imageResId: Int, title: String) {
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Image(
-                painter = painterResource(id = imageResId),
+                painter = rememberImagePainter(data = event.banner),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -317,7 +344,7 @@ fun VerticalCardView(imageResId: Int, title: String) {
                     )
             )
             Text(
-                text = title,
+                text = event.name,
                 fontFamily = inter_bold,
                 color = Color.Black,
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 14.sp),
@@ -372,39 +399,18 @@ private fun getHorizontalCardInfoForIndex(index: Int): Pair<String, Int> {
 }
 
 
-fun getVerticalCardInfoForIndex(index: Int): Pair<String, Int> {
-    val title = when (index) {
-        0 -> "Kopi Cats 5K VR"
-        1 -> "Gamer Life 5K VR"
-        2 -> "KOI Dash Virtual Run"
-        else -> "Default Title"
-    }
-
-    val imageResId = when (index) {
-        0 -> R.drawable.image_1
-        1 -> R.drawable.image_2
-        2 -> R.drawable.image_3
-        else -> R.drawable.ic_launcher_foreground
-    }
-
-    return title to imageResId
-}
-
 @Composable
-fun VerticalCardViewsList() {
+fun VerticalCardViewsList(events: List<HeyJomEventsData>) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
     ) {
-        repeat(3) { index ->
-            val (title, imageResId) = getVerticalCardInfoForIndex(index)
-            VerticalCardView(
-                imageResId = imageResId,
-                title = title
-            )
+        events.forEach { event ->
+            VerticalCardView(event = event)
         }
     }
 }
+
+// ...
 
 @Composable
 fun VirtualRunsScreen(navController: NavHostController) {
@@ -421,12 +427,50 @@ fun VirtualRunsScreen(navController: NavHostController) {
         ) {
             RegisteredEvents()
 
-            ScrollableHorizontalCardViews(navController)
-
-            VirtualRuns()
-
-            VerticalCardViewsList()
+            // Check if eventsList is empty
+            if (eventsList.isEmpty()) {
+                // Display wifi_error image and show toast message
+                Image(
+                    painter = painterResource(id = R.drawable.wifi_error),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(200.dp)
+                        .padding(32.dp)
+                        .align(alignment = Alignment.CenterHorizontally)
+                )
+                Toast("Error fetching events: ${getError()}")
+            } else {
+                // Display the content when eventsList is not empty
+                ScrollableHorizontalCardViews(navController)
+                VirtualRuns()
+                VerticalCardViewsList(events = eventsList)
+            }
         }
     }
 }
 
+@Composable
+fun Toast(message: String) {
+    Text(
+        text = message,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .background(color = Color.Gray, shape = RoundedCornerShape(8.dp)),
+        color = Color.White,
+        textAlign = TextAlign.Center
+    )
+}
+
+fun getError(): String {
+    return try {
+        runBlocking {
+            // Attempt to fetch events and capture the exception message if an error occurs
+            val response = apiService.getEvents()
+            response.events.toString()
+        }
+    } catch (e: Exception) {
+        e.message ?: "Unknown error"
+    }
+}

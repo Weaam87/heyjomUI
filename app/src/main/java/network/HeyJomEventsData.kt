@@ -1,6 +1,13 @@
 package network
 
-import com.squareup.moshi.Json
+data class HeyJomEventsData(
+    val id: Int,
+    val name: String,
+    val type: String,
+    val banner: String,
+    val date: String
+)
 
-data class HeyJomEventsData(val id : String , @Json(name = "img_src") val imgSrcUrl : String) {
-}
+data class HeyJomEventsResponse(
+    val events: List<HeyJomEventsData>
+)
