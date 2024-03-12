@@ -1,5 +1,6 @@
 package screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,6 +31,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,9 +49,25 @@ import androidx.navigation.NavHostController
 import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
+import network.HeyJomEventDetailsData
 
 @Composable
-fun VirtualRunDetailScreen(navController: NavHostController) {
+fun VirtualRunDetailScreen(navController: NavHostController, eventId: Int) {
+
+    // Define a variable to hold the details of the selected event
+    var eventDetails: HeyJomEventDetailsData? by remember { mutableStateOf(null) }
+
+    // Use a coroutine to fetch the event details based on the provided eventId
+    LaunchedEffect(eventId) {
+        Log.d("MyApp", "Fetching details for event with ID: $eventId")
+        try {
+            val response = apiService.getEventDetails(eventId)
+            eventDetails = response.event
+        } catch (e: Exception) {
+            Log.e("MyApp", "Error fetching event details: ${e.message}")
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

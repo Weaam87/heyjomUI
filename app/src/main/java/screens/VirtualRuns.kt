@@ -136,7 +136,7 @@ fun HorizontalCardView(event: HeyJomEventsData, navController: NavController) {
     Row(
         modifier = Modifier
             .clickable {
-                navController.navigate("virtualRunDetailScreen")
+                navController.navigate("virtualRunDetailScreen/${event.id}")
             }
             .width(340.dp)
             .padding(horizontal = 8.dp)
