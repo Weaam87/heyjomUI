@@ -33,6 +33,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +53,9 @@ import coil.compose.rememberImagePainter
 import com.example.heyjomui.R
 import com.example.heyjomui.ui.theme.inter_bold
 import com.example.heyjomui.ui.theme.inter_regular
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import network.HeyJomApi
 import network.HeyJomEventsData
@@ -57,7 +63,7 @@ import network.HeyJomEventsData
 val apiService = HeyJomApi.retrofitService
 
 // Fetch the list of events using a coroutine
-val eventsList: List<HeyJomEventsData> = try {
+var eventsList: List<HeyJomEventsData> = try {
     runBlocking {
         Log.d("MyApp", "Attempting to fetch events...")
 
@@ -244,10 +250,11 @@ fun HorizontalCardView(event: HeyJomEventsData, navController: NavController) {
                     )
                 }
                 // Vertical Divider
-                VerticalDivider(modifier = Modifier
-                    .height(72.dp)
-                    .width(1.dp)
-                    .padding(top = 4.dp)
+                VerticalDivider(
+                    modifier = Modifier
+                        .height(72.dp)
+                        .width(1.dp)
+                        .padding(top = 4.dp)
                 )
                 // Display the texts in the right column
                 Column(
@@ -387,35 +394,64 @@ fun VerticalCardViewsList(events: List<HeyJomEventsData>) {
 @Composable
 fun VirtualRunsScreen(navController: NavHostController) {
 
+    val refreshingState = remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+    suspend fun refreshData() {
+        refreshingState.value = true // Indicate that the refresh process has started
+
+        try {
+            // Fetch the latest data
+            val response = apiService.getEvents()
+
+            // Update your list with the new data
+            eventsList = response.events
+        } catch (e: Exception) {
+            // Handle any errors here
+            Log.e("MyApp", "Error fetching events: ${e.message}")
+        } finally {
+            refreshingState.value = false // Indicate that the refresh process has ended
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
         Header()
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing = refreshingState.value),
+            onRefresh = {
+                // Launch a coroutine within the scope
+                coroutineScope.launch {
+                    refreshData()
+                }
+            },
         ) {
-            RegisteredEvents()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                RegisteredEvents()
 
-            // Check if eventsList is empty
-            if (eventsList.isEmpty()) {
-                // Display wifi_error image and show toast message
-                Image(
-                    painter = painterResource(id = R.drawable.wifi_error),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .width(200.dp)
-                        .height(200.dp)
-                        .padding(32.dp)
-                        .align(alignment = Alignment.CenterHorizontally)
-                )
-                Toast("Error fetching events: ${getError()}")
-            } else {
-                ScrollableHorizontalCardViews(navController, events = eventsList)
-                VirtualRuns()
-                VerticalCardViewsList(events = eventsList)
+                // Check if eventsList is empty
+                if (eventsList.isEmpty()) {
+                    // Display wifi_error image and show toast message
+                    Image(
+                        painter = painterResource(id = R.drawable.wifi_error),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(200.dp)
+                            .height(200.dp)
+                            .padding(32.dp)
+                            .align(alignment = Alignment.CenterHorizontally)
+                    )
+                    Toast("Error fetching events: ${getError()}")
+                } else {
+                    ScrollableHorizontalCardViews(navController, events = eventsList)
+                    VirtualRuns()
+                    VerticalCardViewsList(events = eventsList)
+                }
             }
         }
     }

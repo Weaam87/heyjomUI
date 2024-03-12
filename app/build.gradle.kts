@@ -62,6 +62,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.7.7")
     implementation ("androidx.activity:activity-compose:1.8.2")
     implementation ("io.coil-kt:coil-compose:1.4.0")
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.24.13-rc")
     testImplementation("junit:junit:4.13.2")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation ("com.squareup.moshi:moshi-kotlin:1.13.0")
