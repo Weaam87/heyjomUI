@@ -89,7 +89,7 @@ fun VirtualRunDetailScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(500.dp)
+                .height(560.dp)
         ) {
             ImageSection()
             EventInfoSection()
@@ -275,7 +275,7 @@ fun ActionButtonsSection(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     ) {
         Button(
             onClick = { },
